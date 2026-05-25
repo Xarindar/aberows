@@ -112,6 +112,44 @@ class SimulationEngineTest {
     }
 
     @Test
+    fun `mixed same cell and swap collision counts each arrow at most once per tick`() {
+        val initial = SimulationState(
+            board = Board(
+                width = 3,
+                height = 2,
+                arrows = listOf(
+                    Arrow(
+                        id = "a",
+                        position = Position(0, 0),
+                        direction = Direction.RIGHT,
+                        state = ArrowState.ACTIVE,
+                    ),
+                    Arrow(
+                        id = "b",
+                        position = Position(2, 0),
+                        direction = Direction.LEFT,
+                        state = ArrowState.ACTIVE,
+                    ),
+                    Arrow(
+                        id = "c",
+                        position = Position(1, 1),
+                        direction = Direction.UP,
+                        state = ArrowState.ACTIVE,
+                    ),
+                ),
+            ),
+        )
+
+        val stepped = SimulationEngine.step(initial)
+
+        assertEquals(ArrowState.CRASHED, stepped.arrowsById.getValue("a").state)
+        assertEquals(ArrowState.CRASHED, stepped.arrowsById.getValue("b").state)
+        assertEquals(ArrowState.CRASHED, stepped.arrowsById.getValue("c").state)
+        assertEquals(1, stepped.collisionsUsed)
+        assertEquals(SimulationStatus.WON, stepped.status)
+    }
+
+    @Test
     fun `third collision fails the run`() {
         val initial = SimulationState(
             board = Board(

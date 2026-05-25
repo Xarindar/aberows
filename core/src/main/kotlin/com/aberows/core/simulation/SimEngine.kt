@@ -46,6 +46,18 @@ class SimEngine {
             }
         }
 
+        // Active-vs-idle collisions: an active arrow lands on a cell occupied by an idle arrow
+        val idleByPosition = movedArrows.filter { it.state == ArrowState.IDLE }
+            .associateBy { it.col to it.row }
+        activeAfterMove.forEach { active ->
+            val blocked = idleByPosition[active.col to active.row]
+            if (blocked != null && active.id !in collidedIds && blocked.id !in collidedIds) {
+                collidedIds += active.id
+                collidedIds += blocked.id
+                collisionEvents += 1
+            }
+        }
+
         val resolvedArrows = movedArrows.map { arrow ->
             if (arrow.id in collidedIds) arrow.copy(state = ArrowState.CRASHED) else arrow
         }

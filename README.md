@@ -35,8 +35,30 @@ The puzzle is formally a **deterministic scheduling and routing problem** on a d
 - **Analytics / Ops**: Firebase Analytics, Crashlytics, Remote Config, App Distribution
 - **Release**: Android App Bundle, Play Console
 
+## Current status
+
+**Sprint 1 complete — simulation core shipping.** CI green.
+
+| Module | Status |
+|---|---|
+| `:core` — board model, tick engine, collision detection | ✅ Done — 10 tests passing |
+| `:core` — replay serializer + BFS solver | 🔄 Sprint 2 next |
+| `:app` — Compose graybox renderer | 🔄 In progress |
+| `:app` — Android scaffold (API 35, edge-to-edge) | ⏳ Pending |
+
+### Canonical model (`:core`)
+
+```kotlin
+data class Arrow(val id: Int, val col: Int, val row: Int, val heading: Heading, val state: ArrowState)
+data class Board(val cols: Int, val rows: Int, val arrows: List<Arrow>)
+data class GameState(val board: Board, val collisionsUsed: Int, val isGameOver: Boolean)
+
+// SimEngine.tick(state) — advances all ACTIVE arrows, detects same-cell and swap collisions
+// activate(state, arrowId) — IDLE → ACTIVE transition
+```
+
 ## Graybox spike goals (first 6 weeks)
 
-1. Prove the feel of the tap-and-release loop.
+1. ✅ Prove the feel of the tap-and-release loop (simulation core done).
 2. Validate correctness and speed of the deterministic solver/validator.
 3. Measure retention impact of the three-collision forgiveness system vs stricter modes.

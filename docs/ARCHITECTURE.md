@@ -20,6 +20,24 @@ aberows/
 
 The **core module is the test surface**. All game logic lives here; Android is just an adapter.
 
+### Canonical types (as of Sprint 1)
+
+```kotlin
+// model/
+data class Arrow(val id: Int, val col: Int, val row: Int, val heading: Heading, val state: ArrowState)
+data class Board(val cols: Int, val rows: Int, val arrows: List<Arrow>)
+enum class Heading { UP, RIGHT, DOWN, LEFT }  // with deltaCol, deltaRow
+enum class ArrowState { IDLE, ACTIVE, CLEARED, CRASHED }
+
+// simulation/
+data class GameState(val board: Board, val collisionsUsed: Int, val isGameOver: Boolean)
+class SimEngine { fun tick(state: GameState): GameState }
+fun activate(state: GameState, arrowId: Int): GameState
+
+// solver/ (stubbed, Sprint 2)
+interface Solver { fun solve(board: Board): SolverResult; fun solve(state: GameState): SolverResult }
+```
+
 ## Architecture diagram
 
 ```

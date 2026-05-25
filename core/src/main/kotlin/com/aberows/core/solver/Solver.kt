@@ -7,8 +7,8 @@ data class SolverResult(
     val isSolvable: Boolean,
     val perfectSolutionExists: Boolean,
     val solutionCount: Int,
-    val fastestTapSequence: List<Int>,
-    val estimatedDifficulty: Float,
+    val fastestTapSequence: List<Int>, // Arrow.id is Int
+    val estimatedDifficulty: Float,    // 0.0 (trivial) to 1.0 (expert)
 )
 
 /**

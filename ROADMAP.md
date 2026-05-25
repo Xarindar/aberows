@@ -5,20 +5,21 @@ Two-week sprints. Milestones map to GitHub Milestones.
 ## Milestone 1 — Graybox Spike (Weeks 1–6)
 **Goal:** De-risk design, simulation, and generator before full production.
 
-### Sprint 1 · Core rules graybox (June 1–14) ✅ COMPLETE
+### Sprint 1 · Core rules graybox (June 1–14) 🔄 IMPLEMENTED, PLAYTEST PENDING
 - [x] Define board data model: `Board(cols, rows, arrows)`, `Arrow(id: Int, col, row, heading, state)`, `Heading` enum, `ArrowState` enum
 - [x] Implement deterministic tick engine: `SimEngine.tick()` — pure Kotlin, zero Android deps
 - [x] Tap-activate → travel → exit / collision detection (same-cell + swap/crossing)
 - [x] Three-collision lifecycle: idle → active → cleared / crashed, `isGameOver` on 3rd collision
-- [ ] Minimal Compose board renderer for playtesting (no art) — **@copilot in progress**
-- [ ] Tap input wired to simulation
-- [ ] Manual playtest: does the tap-and-release loop feel right?
+- [x] Minimal Compose board renderer for playtesting (no art) — Canvas graybox in `:app`
+- [x] Tap input wired to simulation
+- [ ] Manual playtest: does the tap-and-release loop feel right? **Blocked locally: no Android SDK/emulator in this environment**
 - [x] 10 unit tests passing (CI green): activation, exit-clear, head-on, swap, mixed 3-arrow, no-op, third-collision-fail
 - [x] GitHub Actions CI: JDK 17 + Gradle 8.7, `:core:test` on push/PR
 
-### Sprint 2 · Deterministic sim and replay spike (June 15–28) 🔄 NEXT
-- [ ] Replay serializer: record tap events → deterministic playback
-- [ ] State hash for transposition table
+### Sprint 2 · Deterministic sim and replay spike (June 15–28) 🔄 IN PROGRESS
+- [x] Replay serializer: `ReplaySerializer` — stable `v1|tick:arrowId,...` text format, round-trip tested
+- [x] Replay player: `ReplayPlayer` — tick-indexed playback against `activate()` + `SimEngine.tick()`
+- [x] State hash: `StateHash` — 64-bit FNV-1a over board dims + sorted arrow snapshots, order-independent
 - [ ] Property tests: replay idempotence, no impossible state transitions
 - [ ] BFS solver prototype (brute force, no pruning yet) — `Solver` interface stubbed in `:core`
 - [ ] Benchmark solver on 4×4, 5×5, 6×6 boards

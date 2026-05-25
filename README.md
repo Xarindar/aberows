@@ -37,14 +37,14 @@ The puzzle is formally a **deterministic scheduling and routing problem** on a d
 
 ## Current status
 
-**Sprint 1 complete — simulation core shipping.** CI green.
+**Graybox implementation is in repo.** `:core` is passing locally; the new `:app` graybox scaffold is wired, but device/emulator playtesting is still pending because this environment has no Android SDK installed.
 
 | Module | Status |
 |---|---|
 | `:core` — board model, tick engine, collision detection | ✅ Done — 10 tests passing |
 | `:core` — replay serializer + BFS solver | 🔄 Sprint 2 next |
-| `:app` — Compose graybox renderer | 🔄 In progress |
-| `:app` — Android scaffold (API 35, edge-to-edge) | ⏳ Pending |
+| `:app` — Compose graybox renderer | ✅ Implemented — Canvas grid, tap-to-activate, 200 ms tick loop |
+| `:app` — Android scaffold (API 35, edge-to-edge) | ✅ Implemented — `:app` module, manifest, `MainActivity`, edge-to-edge |
 
 ### Canonical model (`:core`)
 

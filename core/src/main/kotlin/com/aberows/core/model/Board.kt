@@ -1,17 +1,15 @@
 package com.aberows.core.model
 
 data class Board(
-    val width: Int,
-    val height: Int,
+    val cols: Int,
+    val rows: Int,
     val arrows: List<Arrow>,
 ) {
     init {
-        require(width > 0) { "width must be positive" }
-        require(height > 0) { "height must be positive" }
+        require(cols > 0) { "cols must be positive" }
+        require(rows > 0) { "rows must be positive" }
         require(arrows.map { it.id }.distinct().size == arrows.size) { "arrow ids must be unique" }
     }
 
-    fun contains(position: Position): Boolean {
-        return position.x in 0 until width && position.y in 0 until height
-    }
+    fun contains(col: Int, row: Int): Boolean = col in 0 until cols && row in 0 until rows
 }

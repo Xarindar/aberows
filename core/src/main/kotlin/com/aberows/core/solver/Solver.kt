@@ -1,14 +1,14 @@
 package com.aberows.core.solver
 
 import com.aberows.core.model.Board
-import com.aberows.core.simulation.SimulationState
+import com.aberows.core.simulation.GameState
 
 data class SolverResult(
     val isSolvable: Boolean,
     val perfectSolutionExists: Boolean,
     val solutionCount: Int,
-    val fastestTapSequence: List<String>, // Arrow.id is String throughout
-    val estimatedDifficulty: Float,       // 0.0 (trivial) to 1.0 (expert)
+    val fastestTapSequence: List<Int>,
+    val estimatedDifficulty: Float,
 )
 
 /**
@@ -22,5 +22,5 @@ data class SolverResult(
  */
 interface Solver {
     fun solve(board: Board): SolverResult
-    fun solve(state: SimulationState): SolverResult
+    fun solve(state: GameState): SolverResult
 }

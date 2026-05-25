@@ -5,10 +5,10 @@ import com.aberows.core.simulation.SimulationState
 
 data class SolverResult(
     val isSolvable: Boolean,
-    val perfectSolutionExists: Boolean,  // zero collisions
-    val solutionCount: Int,              // distinct tap orderings that clear the board
-    val fastestTapSequence: List<String>, // arrowIds in tap order for fastest clear
-    val estimatedDifficulty: Float,      // 0.0 (trivial) to 1.0 (expert)
+    val perfectSolutionExists: Boolean,
+    val solutionCount: Int,
+    val fastestTapSequence: List<String>, // Arrow.id is String throughout
+    val estimatedDifficulty: Float,       // 0.0 (trivial) to 1.0 (expert)
 )
 
 /**
